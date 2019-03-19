@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SSH</title>
+    <script type=text/javascript src="{{
+  url_for('static', filename='jquery-3.3.1.min.js') }}"></script>
+</head>
+<body>
+
+
+<p>this is ssh</p>
+
+<P>username:password</P>
+<input type="text"  id="passwd1" value={{data['passwd1']}}>
+<input type="text"  id="passwd2" value={{data['passwd2']}}>
+<br>
+<button onclick="change()">Change</button>
+
+<p>输入IP地址，用‘-’表示范围，多个IP可以用‘，’隔开，例如ip1-ip2,ip3,ip4-ip5。输入后点击'Save'</p>
+
+<input type="text" style="width:600px" id="hosts" value={{data['hosts']}}><button onclick="save()">Save</button>
+<br><br>
+<input type="text" style="width:600px" id="cmd" value={{data['cmd']}} ><button onclick="cmd()">Execmd</button>
+<br>
+
+<p>Output</p><textarea rows="40" cols="150" name="10.10.10.1" readonly="readonly">{{data['output']}}</textarea>
+
+<br>
+<a href='{{url_for('showlog')}}'>show history output</a>
+
+<div id="texts">
+
+</div>
+
+
+<script>
+    function sleep(numberMillis) {
+        var now = new Date();
+        var exitTime = now.getTime() + numberMillis;
+        while (true) {
+            now = new Date();
+            if (now.getTime() > exitTime)
+                return;
+        }
+    }
+
+    function save() {
+        var hosts = $("#hosts").val();
+        var data={'hosts':hosts,'key':'updateIp'};
+        $.post('{{ url_for('ssh') }}',data);
+    }
+    function cmd() {
+        var cmd = $("#cmd").val();
+        var data={'cmd':cmd,'key':'execmd'};
+        $.post('{{ url_for('ssh') }}',data);
+        sleep(700)
+        window.location.reload();
+
+    }
+    function change() {
+        var passwd1 = $("#passwd1").val();
+        var passwd2 = $("#passwd2").val();
+        var data = {'passwd1':passwd1,'passwd2':passwd2,'key':'changePasswd'}
+        $.post('{{ url_for('ssh') }}',data);
+
+    }
+    function showlog() {
+        var data = {'key':'showlog'}
+        $.post('{{ url_for('ssh') }}',data);
+    }
+</script>
+
+<script>
+
+    function xxx() {
+
+        var html_content = "";
+        for (var i = 0; i < 10; i++) {
+            html_content += ''
+        }
+        document.getElementById("texts").innerHTML = html_content
+
+    }
+
+</script>
+
+
+
+
+</body>
+</html>

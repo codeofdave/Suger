@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log</title>
+    <script type=text/javascript src="{{
+  url_for('static', filename='jquery-3.3.1.min.js') }}"></script>
+    <script src="{{url_for('static', filename='jquery.textareafullscreen.js') }}"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='textareafullscreen.css') }}">
+
+</head>
+<body>
+<p>Output</p><textarea rows="60"  cols="150" readonly="readonly">{{data}}</textarea>
+
+
+</body>
+</html>
+
+
